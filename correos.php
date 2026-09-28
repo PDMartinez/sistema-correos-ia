@@ -8,6 +8,12 @@ exigirPermiso($pdo, 'ver_correos');
 $usuario = usuarioActual();
 $esAdministrador = ($usuario['rol_nombre'] ?? '') === 'Administrador';
 $model = new Correo($pdo);
+$permiso = new Permiso($pdo);
+$puedeClasificar = $permiso->usuarioTienePermiso((int) $usuario['id'], 'clasificar_correos');
+$iaConfigurada = (new OpenAIClassificationService())->estaConfigurado();
+$flashOk = $_SESSION['flash_ok'] ?? null;
+$flashError = $_SESSION['flash_error'] ?? null;
+unset($_SESSION['flash_ok'], $_SESSION['flash_error']);
 
 $buscar = trim((string) ($_GET['buscar'] ?? ''));
 $cuentaId = (string) ($_GET['cuenta_id'] ?? '');
@@ -63,6 +69,17 @@ function urlPagina(int $pagina): string {
 <div class="filtro-acciones"><button type="submit">Buscar</button><a class="boton-secundario boton-pequeno" href="correos.php">Limpiar</a></div>
 </form>
 
+<?php if ($flashOk): ?><div class="estado ok"><?= e((string)$flashOk) ?></div><?php endif; ?>
+<?php if ($flashError): ?><div class="estado error"><?= e((string)$flashError) ?></div><?php endif; ?>
+<?php if ($puedeClasificar && $iaConfigurada): ?>
+<div class="barra-ia">
+<div><strong>Clasificación inteligente</strong><p class="nota">Procesa los correos pendientes de clasificación.</p></div>
+<form method="POST" action="clasificar_pendientes.php" class="form-inline">
+<?= csrfInput() ?><label for="limite">Cantidad</label><select id="limite" name="limite"><option value="5">5</option><option value="10" selected>10</option><option value="20">20</option></select><button type="submit">Clasificar pendientes con IA</button>
+</form></div>
+<?php elseif ($puedeClasificar && !$iaConfigurada): ?>
+<div class="estado error">La IA no está configurada. Agregue OPENAI_API_KEY al archivo .env.</div>
+<?php endif; ?>
 <p class="resumen-listado"><?= (int)$resultado['total'] ?> correo(s) encontrado(s).</p>
 <?php if (!$resultado['items']): ?>
 <div class="estado ok">No se encontraron correos con los filtros seleccionados.</div>
@@ -78,7 +95,7 @@ function urlPagina(int $pagina): string {
 <td><?= e((string) $correo['cuenta_email']) ?></td>
 <td><span class="estado-correo estado-<?= strtolower((string)$correo['estado']) ?>"><?= e(estadoEtiqueta((string)$correo['estado'])) ?></span></td>
 <td><?= e(prioridadEtiqueta($correo['prioridad'] ?? null)) ?></td>
-<td><a class="boton-secundario boton-pequeno" href="correo_ver.php?id=<?= (int)$correo['id'] ?>">Ver</a></td>
+<td><a class="boton-secundario boton-pequeno" href="correo_ver.php?id=<?= (int)$correo['id'] ?>">Ver</a><?php if ($puedeClasificar && empty($correo['prioridad']) && $iaConfigurada): ?><form method="POST" action="clasificar_correo.php" class="form-inline-inline"><input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>"><input type="hidden" name="id" value="<?= (int)$correo['id'] ?>"><button type="submit" class="boton-pequeno">IA</button></form><?php endif; ?></td>
 </tr>
 <?php endforeach; ?>
 </tbody></table></div>

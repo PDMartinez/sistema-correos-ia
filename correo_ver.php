@@ -9,6 +9,13 @@ $usuario = usuarioActual();
 $esAdministrador = ($usuario['rol_nombre'] ?? '') === 'Administrador';
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 if (!$id || $id < 1) { http_response_code(404); exit('Correo no encontrado.'); }
+
+$flashOk = $_SESSION['flash_ok'] ?? null;
+$flashError = $_SESSION['flash_error'] ?? null;
+unset($_SESSION['flash_ok'], $_SESSION['flash_error']);
+$permiso = new Permiso($pdo);
+$puedeClasificar = $permiso->usuarioTienePermiso((int) $usuario['id'], 'clasificar_correos');
+
 $model = new Correo($pdo);
 $correo = $model->obtenerPorId((int)$id, (int)$usuario['id'], $esAdministrador);
 if (!$correo) { http_response_code(404); exit('Correo no encontrado o no autorizado.'); }
@@ -16,6 +23,12 @@ if (!$correo) { http_response_code(404); exit('Correo no encontrado o no autoriz
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 function prioridadEtiqueta(?string $p): string { return match($p){'ALTA'=>'Alta','MEDIA'=>'Media','BAJA'=>'Baja',default=>'Sin clasificar'}; }
 function estadoEtiqueta(string $s): string { return match($s){'NO_CLASIFICADO'=>'No clasificado','CLASIFICADO'=>'Clasificado','ATENDIDO'=>'Atendido','ARCHIVADO'=>'Archivado',default=>$s}; }
+function contenidoCompacto(?string $contenido): string {
+    $contenido = trim((string) $contenido);
+    $contenido = preg_replace('/[ \t]+/u', ' ', $contenido) ?? $contenido;
+    $contenido = preg_replace('/(?:\r?\n[ \t]*){3,}/u', "\n\n", $contenido) ?? $contenido;
+    return trim($contenido);
+}
 
 $stmt = $pdo->prepare('INSERT INTO auditoria (usuario_id, accion, modulo, descripcion, ip, user_agent) VALUES (:usuario_id, :accion, :modulo, :descripcion, :ip, :user_agent)');
 $stmt->execute([
@@ -38,7 +51,24 @@ $stmt->execute([
 <?php if (!empty($correo['categoria'])): ?><div class="detalle-fila"><strong>Categoría:</strong><span><?= e((string)$correo['categoria']) ?></span></div><?php endif; ?>
 <?php if ($correo['confianza'] !== null): ?><div class="detalle-fila"><strong>Confianza IA:</strong><span><?= e((string)$correo['confianza']) ?></span></div><?php endif; ?>
 </div>
+<?php if ($flashOk): ?><div class="estado ok"><?= e((string)$flashOk) ?></div><?php endif; ?>
+<?php if ($flashError): ?><div class="estado error"><?= e((string)$flashError) ?></div><?php endif; ?>
+<?php if ($puedeClasificar && empty($correo['clasificacion_id'])): ?>
+<form method="POST" action="clasificar_correo.php" class="form-inline">
+<?= csrfInput() ?>
+<input type="hidden" name="id" value="<?= (int)$correo['id'] ?>">
+<button type="submit">Clasificar con IA</button>
+</form>
+<?php endif; ?>
 <hr>
-<h2>Contenido</h2><div class="contenido-correo"><?= nl2br(e((string)$correo['contenido'])) ?></div>
-<?php if (!empty($correo['justificacion'])): ?><h2>Justificación de la clasificación</h2><div class="contenido-correo"><?= nl2br(e((string)$correo['justificacion'])) ?></div><?php endif; ?>
+<div class="seccion-contenido">
+<div class="seccion-titulo"><h2>Contenido del correo</h2><span class="nota">Vista compacta</span></div>
+<div class="contenido-correo"><?= nl2br(e(contenidoCompacto((string)$correo['contenido']))) ?></div>
+</div>
+<?php if (!empty($correo['justificacion'])): ?>
+<div class="seccion-contenido">
+<div class="seccion-titulo"><h2>Justificación de la clasificación</h2><span class="nota">Generada por IA</span></div>
+<div class="justificacion-correo"><?= nl2br(e(contenidoCompacto((string)$correo['justificacion']))) ?></div>
+</div>
+<?php endif; ?>
 </section></main></body></html>

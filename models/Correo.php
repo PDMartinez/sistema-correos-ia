@@ -100,7 +100,11 @@ final class Correo
                        cl.prioridad, cl.confianza
                 FROM correos c
                 INNER JOIN cuentas_gmail cg ON cg.id = c.cuenta_gmail_id
-                LEFT JOIN clasificaciones cl ON cl.correo_id = c.id
+                LEFT JOIN clasificaciones cl ON cl.id = (
+                           SELECT cl2.id FROM clasificaciones cl2
+                           WHERE cl2.correo_id = c.id
+                           ORDER BY cl2.id DESC LIMIT 1
+                       )
                 WHERE ' . $whereSql . '
                 ORDER BY c.fecha_recepcion DESC, c.id DESC
                 LIMIT :limite OFFSET :offset';
@@ -138,7 +142,11 @@ final class Correo
                        cl.fecha_clasificacion
                 FROM correos c
                 INNER JOIN cuentas_gmail cg ON cg.id = c.cuenta_gmail_id
-                LEFT JOIN clasificaciones cl ON cl.correo_id = c.id
+                LEFT JOIN clasificaciones cl ON cl.id = (
+                           SELECT cl2.id FROM clasificaciones cl2
+                           WHERE cl2.correo_id = c.id
+                           ORDER BY cl2.id DESC LIMIT 1
+                       )
                 WHERE c.id = :correo_id AND ' . $scope . '
                 LIMIT 1';
 

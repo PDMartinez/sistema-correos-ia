@@ -149,3 +149,44 @@ select { width:100%; padding:11px 12px; border:1px solid #cbd5e1; border-radius:
 .detalle-fila { display:grid; grid-template-columns:170px 1fr; gap:12px; padding:10px 0; border-bottom:1px solid #e5e7eb; }
 .contenido-correo { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; line-height:1.55; white-space:normal; overflow-wrap:anywhere; }
 @media (max-width: 850px) { .filtros-correo { grid-template-columns:1fr; } .detalle-fila { grid-template-columns:1fr; gap:4px; } }
+
+
+/* Etapa 8 - Clasificación IA */
+.form-inline { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.form-inline button, .form-inline .boton-secundario { margin-top:0; }
+.form-inline-inline { display:inline-block; margin-left:6px; }
+.form-inline-inline button { margin-top:0; }
+.barra-ia { display:flex; justify-content:space-between; align-items:center; gap:18px; flex-wrap:wrap; padding:14px 16px; margin:16px 0; border:1px solid #dbeafe; background:#f8fafc; border-radius:9px; }
+.barra-ia .nota { margin:4px 0 0; }
+.badge-prioridad { display:inline-block; padding:5px 8px; border-radius:999px; font-size:.82rem; font-weight:600; }
+.prioridad-alta { background:#fee2e2; color:#991b1b; }
+.prioridad-media { background:#fef3c7; color:#92400e; }
+.prioridad-baja { background:#dcfce7; color:#166534; }
+
+
+/* Ajuste de visualización compacta del detalle del correo */
+.tarjeta-ancha { width: min(1000px, 100%); }
+.cabecera h1 { font-size: 1.45rem; line-height: 1.25; margin-bottom: 6px; overflow-wrap: anywhere; }
+.detalle-correo { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+.detalle-fila { grid-template-columns: 105px minmax(0, 1fr); padding: 7px 0; min-width: 0; }
+.detalle-fila span { overflow-wrap: anywhere; }
+.seccion-titulo { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.seccion-titulo h2 { margin:0; font-size:1.05rem; }
+.seccion-titulo .nota { margin:0; font-size:.78rem; }
+.contenido-correo, .justificacion-correo {
+    max-height: 230px;
+    overflow-y: auto;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+    padding:12px 14px;
+    line-height:1.4;
+    font-size:.9rem;
+    overflow-wrap:anywhere;
+}
+.justificacion-correo { max-height: 140px; }
+.seccion-contenido { margin-top: 16px; }
+@media (max-width: 700px) {
+    .detalle-correo { grid-template-columns:1fr; column-gap:0; }
+    .contenido-correo { max-height: 260px; }
+}

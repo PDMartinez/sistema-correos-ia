@@ -9,6 +9,9 @@ require_once __DIR__ . '/session.php';
 require_once __DIR__ . '/csrf.php';
 require_once __DIR__ . '/../models/Usuario.php';
 require_once __DIR__ . '/../models/Permiso.php';
+require_once __DIR__ . '/../models/Correo.php';
+require_once __DIR__ . '/../services/OpenAIClassificationService.php';
+require_once __DIR__ . '/../services/ClasificacionService.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 require_once __DIR__ . '/../middleware/PermissionMiddleware.php';
 
