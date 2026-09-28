@@ -7,6 +7,7 @@ $usuario = usuarioActual();
 $permiso = new Permiso($pdo);
 $gestionaUsuarios = $permiso->usuarioTienePermiso((int) $usuario['id'], 'gestionar_usuarios');
 $gestionaGmail = $permiso->usuarioTienePermiso((int) $usuario['id'], 'gestionar_cuentas_gmail');
+$revisaClasificaciones = $permiso->usuarioTienePermiso((int) $usuario['id'], 'revisar_clasificaciones');
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 ?>
 <!DOCTYPE html>
@@ -31,6 +32,9 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
 <p><a class="boton-secundario" href="cuentas_gmail.php">Gestionar cuentas Gmail</a></p>
 <?php endif; ?>
 <p><a class="boton-secundario" href="correos.php">Ver correos</a></p>
+<?php if ($revisaClasificaciones): ?>
+<p><a class="boton-secundario" href="revisiones.php">Revisar clasificaciones</a></p>
+<?php endif; ?>
 <form method="POST" action="logout.php">
 <?= csrfInput() ?>
 <button type="submit">Cerrar sesión</button>
