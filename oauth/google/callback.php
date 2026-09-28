@@ -28,16 +28,7 @@ try {
     header('Location: ../../cuentas_gmail.php?ok=' . rawurlencode('Cuenta Gmail conectada correctamente: ' . $resultado['email']));
     exit;
 } catch (Throwable $e) {
-    http_response_code(500);
-
-    echo '<h1>Error en OAuth</h1>';
-    echo '<pre>';
-    echo htmlspecialchars(
-        $e->getMessage() . "\n\n" . $e->getTraceAsString(),
-        ENT_QUOTES,
-        'UTF-8'
-    );
-    echo '</pre>';
-
+    error_log('Error en callback Google OAuth: ' . $e->getMessage());
+    header('Location: ../../cuentas_gmail.php?error=' . rawurlencode('No se pudo conectar la cuenta Gmail. Revisa la configuración de Google Cloud.'));
     exit;
 }

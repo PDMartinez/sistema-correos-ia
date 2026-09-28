@@ -40,7 +40,7 @@ final class CuentaGmail
                      refresh_token = :refresh_token,
                      token_expira_en = :token_expira_en,
                      estado = :estado,
-                     fecha_actualizacion  = CURRENT_TIMESTAMP
+                     fecha_actualizacion = CURRENT_TIMESTAMP
                  WHERE id = :id'
             );
             $stmt->execute([
@@ -69,12 +69,40 @@ final class CuentaGmail
         ]);
     }
 
+    public function obtenerPorId(int $id): ?array
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM cuentas_gmail WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        $fila = $stmt->fetch();
+        return $fila ?: null;
+    }
+
+    public function actualizarUltimaSincronizacion(int $id): void
+    {
+        $stmt = $this->pdo->prepare(
+            'UPDATE cuentas_gmail
+             SET ultima_sincronizacion = CURRENT_TIMESTAMP,
+                 fecha_actualizacion = CURRENT_TIMESTAMP
+             WHERE id = :id'
+        );
+        $stmt->execute(['id' => $id]);
+    }
+
+    public function marcarError(int $id): void
+    {
+        $stmt = $this->pdo->prepare(
+            "UPDATE cuentas_gmail
+             SET estado = 'ERROR', fecha_actualizacion = CURRENT_TIMESTAMP
+             WHERE id = :id"
+        );
+        $stmt->execute(['id' => $id]);
+    }
+
     public function listar(): array
     {
         $stmt = $this->pdo->query(
             'SELECT id, email, estado, ultima_sincronizacion, fecha_conexion, fecha_actualizacion
-            FROM cuentas_gmail ORDER BY email ASC'
-             
+             FROM cuentas_gmail ORDER BY email ASC'
         );
         return $stmt->fetchAll();
     }

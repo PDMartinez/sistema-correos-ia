@@ -55,6 +55,7 @@ $error = trim((string) ($_GET['error'] ?? ''));
 <th>Estado</th>
 <th>Última sincronización</th>
 <th>Registrada</th>
+<th>Acciones</th>
 </tr>
 </thead>
 <tbody>
@@ -64,6 +65,17 @@ $error = trim((string) ($_GET['error'] ?? ''));
 <td><?= e((string) $cuenta['estado']) ?></td>
 <td><?= e((string) ($cuenta['ultima_sincronizacion'] ?? 'Nunca')) ?></td>
 <td><?= e((string) $cuenta['fecha_conexion']) ?></td>
+<td>
+<?php if ((string) $cuenta['estado'] === 'ACTIVA'): ?>
+<form method="POST" action="gmail_sincronizar.php" style="display:inline;">
+<?= csrfInput() ?>
+<input type="hidden" name="cuenta_id" value="<?= (int) $cuenta['id'] ?>">
+<button type="submit">Sincronizar</button>
+</form>
+<?php else: ?>
+<span>Cuenta no activa</span>
+<?php endif; ?>
+</td>
 </tr>
 <?php endforeach; ?>
 </tbody>
