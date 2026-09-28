@@ -30,7 +30,7 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
 <?php if ($gestionaGmail): ?>
 <p><a class="boton-secundario" href="cuentas_gmail.php">Gestionar cuentas Gmail</a></p>
 <?php endif; ?>
-<p>La gestión de correos se implementará en las siguientes etapas.</p>
+<p><a class="boton-secundario" href="correos.php">Ver correos</a></p>
 <form method="POST" action="logout.php">
 <?= csrfInput() ?>
 <button type="submit">Cerrar sesión</button>

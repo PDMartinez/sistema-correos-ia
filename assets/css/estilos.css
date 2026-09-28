@@ -129,3 +129,23 @@ th { background:#f8fafc; }
 .acciones form { display:inline-block; margin-left:8px; }
 .boton-pequeno { margin:0; padding:7px 10px; }
 select { width:100%; padding:11px 12px; border:1px solid #cbd5e1; border-radius:7px; font:inherit; }
+
+
+/* Etapa 7 - Gestión de correos */
+.filtros-correo { display:grid; grid-template-columns: 2fr 1fr 1fr auto; gap:12px; align-items:end; margin:18px 0; }
+.filtros-correo label { display:block; }
+.filtro-acciones { display:flex; gap:8px; align-items:end; }
+.filtro-acciones button { margin-top:0; }
+.filtro-acciones .boton-secundario { margin-top:0; }
+.resumen-listado { color:#64748b; }
+.estado-correo { display:inline-block; padding:5px 8px; border-radius:999px; font-size:.82rem; white-space:nowrap; }
+.estado-no_clasificado { background:#fef3c7; color:#92400e; }
+.estado-clasificado { background:#dbeafe; color:#1e40af; }
+.estado-atendido { background:#dcfce7; color:#166534; }
+.estado-archivado { background:#e5e7eb; color:#374151; }
+.paginacion { display:flex; justify-content:center; align-items:center; gap:14px; margin-top:20px; }
+.paginacion .boton-secundario { margin-top:0; }
+.detalle-correo { display:grid; gap:0; }
+.detalle-fila { display:grid; grid-template-columns:170px 1fr; gap:12px; padding:10px 0; border-bottom:1px solid #e5e7eb; }
+.contenido-correo { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:18px; line-height:1.55; white-space:normal; overflow-wrap:anywhere; }
+@media (max-width: 850px) { .filtros-correo { grid-template-columns:1fr; } .detalle-fila { grid-template-columns:1fr; gap:4px; } }
