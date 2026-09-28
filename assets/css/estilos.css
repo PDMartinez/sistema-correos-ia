@@ -111,3 +111,21 @@ code, pre {
 pre {
     white-space: pre-wrap;
 }
+
+/* Etapa 5 */
+.panel { place-items: start center; }
+.tarjeta-ancha { width: min(1100px, 100%); }
+.cabecera { display:flex; justify-content:space-between; gap:16px; align-items:center; flex-wrap:wrap; }
+.cabecera .boton-secundario { margin-left:8px; }
+.buscar { display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-bottom:18px; }
+.buscar label { width:100%; }
+.buscar input { flex:1; min-width:180px; }
+.buscar button { margin-top:0; }
+.tabla-contenedor { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; }
+th,td { text-align:left; padding:12px 9px; border-bottom:1px solid #e5e7eb; }
+th { background:#f8fafc; }
+.acciones { white-space:nowrap; }
+.acciones form { display:inline-block; margin-left:8px; }
+.boton-pequeno { margin:0; padding:7px 10px; }
+select { width:100%; padding:11px 12px; border:1px solid #cbd5e1; border-radius:7px; font:inherit; }
