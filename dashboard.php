@@ -6,6 +6,7 @@ exigirPermiso($pdo, 'ver_correos');
 $usuario = usuarioActual();
 $permiso = new Permiso($pdo);
 $gestionaUsuarios = $permiso->usuarioTienePermiso((int) $usuario['id'], 'gestionar_usuarios');
+$gestionaGmail = $permiso->usuarioTienePermiso((int) $usuario['id'], 'gestionar_cuentas_gmail');
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 ?>
 <!DOCTYPE html>
@@ -25,6 +26,9 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
 <div class="estado ok">Autenticación y permisos activos.</div>
 <?php if ($gestionaUsuarios): ?>
 <p><a class="boton-secundario" href="usuarios.php">Gestionar usuarios</a></p>
+<?php endif; ?>
+<?php if ($gestionaGmail): ?>
+<p><a class="boton-secundario" href="cuentas_gmail.php">Gestionar cuentas Gmail</a></p>
 <?php endif; ?>
 <p>La gestión de correos se implementará en las siguientes etapas.</p>
 <form method="POST" action="logout.php">
