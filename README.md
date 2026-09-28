@@ -1,15 +1,6 @@
-# Sistema Correos IA
+# Sistema Correos IA - Etapa 4
 
-Proyecto web para la clasificación automática de correos electrónicos mediante Inteligencia Artificial.
-
-## Etapa 3
-
-Esta etapa implementa:
-
-- Estructura inicial del proyecto.
-- Configuración mediante `.env`.
-- Conexión centralizada a MySQL mediante PDO.
-- Página de prueba de conexión.
+Etapa 4: autenticación, sesiones, roles, permisos y protección básica.
 
 ## Requisitos
 
@@ -21,22 +12,46 @@ Esta etapa implementa:
 
 ## Instalación
 
-1. Copiar la carpeta `sistema-correos-ia` dentro de:
-
-   `C:\xampp\htdocs\`
+1. Copiar la carpeta a:
+   `C:\xampp\htdocs\sistema-correos-ia`
 
 2. Verificar que Apache y MySQL estén iniciados.
 
-3. Verificar que exista la base de datos:
-
-   `sistema_correos_ia`
+3. Verificar que la base `sistema_correos_ia` y las tablas de la Etapa 2 existan.
 
 4. Revisar `.env`.
 
 5. Abrir:
+   `http://localhost/sistema-correos-ia/setup_admin.php`
 
-   `http://localhost/sistema-correos-ia/`
+6. Crear el primer usuario Administrador con una contraseña elegida por el administrador.
 
-## Nota de seguridad
+7. ELIMINAR inmediatamente:
+   `setup_admin.php`
 
-El archivo `.env` contiene configuración sensible y no debe subirse a Git. El archivo `.env.example` sirve como plantilla.
+8. Abrir:
+   `http://localhost/sistema-correos-ia/login.php`
+
+## Seguridad implementada
+
+- `password_hash()` y `password_verify()`.
+- PDO con consultas preparadas.
+- Regeneración de ID de sesión después del login.
+- Cookies de sesión `HttpOnly`.
+- `SameSite=Lax`.
+- Token CSRF para formularios POST.
+- Control de autenticación.
+- Control de permisos mediante roles.
+- Mensajes genéricos para credenciales incorrectas.
+- `.env` excluido de Git.
+
+## Nota
+
+La etapa 4 no implementa todavía:
+- CRUD de usuarios.
+- Gmail OAuth.
+- Gmail API.
+- clasificación mediante IA.
+- dashboard funcional de correos.
+
+Esas funciones pertenecen a etapas posteriores.
