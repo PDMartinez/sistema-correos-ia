@@ -26,9 +26,10 @@ $error = trim((string) ($_GET['error'] ?? ''));
 <title>Gestionar cuentas Gmail - <?= e((string) config('APP_NAME')) ?></title>
 <link rel="stylesheet" href="assets/css/estilos.css">
 </head>
-<body>
-<main class="contenedor">
-<section class="tarjeta">
+<body class="module-page">
+<?php require __DIR__ . '/views/layout/app_nav.php'; ?>
+<main class="contenedor panel">
+<section class="tarjeta tarjeta-ancha">
 <h1>Gestionar cuentas Gmail</h1>
 <p>Conecta las cuentas Gmail que serán utilizadas para importar y clasificar correos.</p>
 

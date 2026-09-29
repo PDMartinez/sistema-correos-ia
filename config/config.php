@@ -41,3 +41,6 @@ function config(string $key, mixed $default = null): mixed
 }
 
 date_default_timezone_set((string) config('APP_TIMEZONE', 'America/Asuncion'));
+
+require_once __DIR__ . '/security.php';
+aplicarEncabezadosSeguridad();

@@ -39,7 +39,8 @@ $stmt->execute([
 ]);
 ?>
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Correo - <?= e((string)config('APP_NAME')) ?></title><link rel="stylesheet" href="assets/css/estilos.css"></head>
-<body><main class="contenedor panel"><section class="tarjeta tarjeta-ancha">
+<body class="module-page"><?php require __DIR__ . '/views/layout/app_nav.php'; ?>
+<main class="contenedor panel"><section class="tarjeta tarjeta-ancha">
 <div class="cabecera"><div><h1><?= e((string)$correo['asunto']) ?></h1><p class="nota">Detalle del correo importado.</p></div><a class="boton-secundario" href="correos.php">← Volver a correos</a></div>
 <div class="detalle-correo">
 <div class="detalle-fila"><strong>Cuenta:</strong><span><?= e((string)$correo['cuenta_email']) ?></span></div>

@@ -45,6 +45,10 @@ class AuthController
         iniciarSesionSegura();
         session_regenerate_id(true);
 
+        // El token CSRF anterior pertenecía a la sesión preautenticada.
+        // Se fuerza su regeneración después del cambio de ID de sesión.
+        unset($_SESSION['csrf_token']);
+
         $_SESSION['usuario'] = [
             'id' => (int) $usuario['id'],
             'nombre' => $usuario['nombre'],

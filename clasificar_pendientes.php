@@ -42,7 +42,7 @@ try {
     }
 } catch (Throwable $e) {
     error_log('Error clasificando pendientes: ' . $e->getMessage());
-    $_SESSION['flash_error'] = $e->getMessage();
+    $_SESSION['flash_error'] = 'No fue posible completar la clasificación por lote. Revisa el registro del servidor.';
 }
 
 header('Location: correos.php?estado=NO_CLASIFICADO');

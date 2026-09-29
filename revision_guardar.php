@@ -67,7 +67,7 @@ try {
 } catch (Throwable $e) {
     if ($pdo->inTransaction()) { $pdo->rollBack(); }
     error_log('Error registrando revisión del correo ' . (int)$id . ': ' . $e->getMessage());
-    $_SESSION['flash_error'] = $e->getMessage();
+    $_SESSION['flash_error'] = 'No fue posible guardar la revisión. Revisa el registro del servidor.';
 }
 
 header('Location: revision_ver.php?id=' . (int)$id);

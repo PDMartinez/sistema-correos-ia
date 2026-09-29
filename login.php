@@ -40,9 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $mensaje = $resultado['message'];
         } catch (Throwable $e) {
-            $mensaje = config('APP_DEBUG') === 'true'
-                ? 'Error técnico: ' . $e->getMessage()
-                : 'No fue posible iniciar sesión.';
+            error_log('Error durante el inicio de sesión: ' . $e->getMessage());
+            $mensaje = 'No fue posible iniciar sesión en este momento.';
         }
     }
 }

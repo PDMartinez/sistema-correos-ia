@@ -31,7 +31,8 @@ function campo(array $old, ?array $u, string $key): string {
 <title><?= $usuario ? 'Editar' : 'Nuevo' ?> usuario - Sistema Correos IA</title>
 <link rel="stylesheet" href="assets/css/estilos.css">
 </head>
-<body>
+<body class="module-page">
+<?php require __DIR__ . '/views/layout/app_nav.php'; ?>
 <main class="contenedor">
 <section class="tarjeta">
 <h1><?= $usuario ? 'Editar usuario' : 'Nuevo usuario' ?></h1>

@@ -20,7 +20,8 @@ function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8')
 <title>Usuarios - Sistema Correos IA</title>
 <link rel="stylesheet" href="assets/css/estilos.css">
 </head>
-<body>
+<body class="module-page">
+<?php require __DIR__ . '/views/layout/app_nav.php'; ?>
 <main class="contenedor panel">
 <section class="tarjeta tarjeta-ancha">
 <div class="cabecera">

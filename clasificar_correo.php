@@ -43,7 +43,7 @@ try {
     $_SESSION['flash_ok'] = 'Correo clasificado correctamente mediante IA.';
 } catch (Throwable $e) {
     error_log('Error clasificando correo ' . (int) $id . ': ' . $e->getMessage());
-    $_SESSION['flash_error'] = $e->getMessage();
+    $_SESSION['flash_error'] = 'No fue posible clasificar el correo en este momento. Revisa el registro del servidor.';
 }
 
 header('Location: correo_ver.php?id=' . (int) $id);

@@ -41,7 +41,8 @@ $stmt->execute([
 ?>
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Revisión - <?= e((string)config('APP_NAME')) ?></title><link rel="stylesheet" href="assets/css/estilos.css"></head>
-<body><main class="contenedor panel"><section class="tarjeta tarjeta-ancha">
+<body class="module-page"><?php require __DIR__ . '/views/layout/app_nav.php'; ?>
+<main class="contenedor panel"><section class="tarjeta tarjeta-ancha">
 <div class="cabecera"><div><h1><?= e((string)$item['asunto']) ?></h1><p class="nota">Revisión humana de la clasificación generada por IA.</p></div><a class="boton-secundario" href="revisiones.php">← Volver a revisiones</a></div>
 <?php if ($flashOk): ?><div class="estado ok"><?= e((string)$flashOk) ?></div><?php endif; ?>
 <?php if ($flashError): ?><div class="estado error"><?= e((string)$flashError) ?></div><?php endif; ?>

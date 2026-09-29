@@ -54,7 +54,8 @@ function urlPagina(int $pagina): string {
 <title>Correos - <?= e((string) config('APP_NAME')) ?></title>
 <link rel="stylesheet" href="assets/css/estilos.css">
 </head>
-<body>
+<body class="module-page">
+<?php require __DIR__ . '/views/layout/app_nav.php'; ?>
 <main class="contenedor panel">
 <section class="tarjeta tarjeta-ancha">
 <div class="cabecera">
